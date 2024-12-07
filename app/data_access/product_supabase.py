@@ -38,7 +38,6 @@ def dataGetProduct(id):
 def dataUpdateProduct(product: Product) :
     # pass params individually
     #response = supabase.table("product").upsert({"id": product.id, "category_id": product.category_id, "title": product.title, "thumbnail": product.thumbnail, "stock": product.stock, "price": product.price}).execute()
-    print(response.data)
     response = (
         supabase.table("product")
         .update(product.dict()) # convert product object to dict - required by Supabase
