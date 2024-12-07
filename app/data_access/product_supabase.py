@@ -40,7 +40,7 @@ def dataUpdateProduct(product: Product) :
     #response = supabase.table("product").upsert({"id": product.id, "category_id": product.category_id, "title": product.title, "thumbnail": product.thumbnail, "stock": product.stock, "price": product.price}).execute()
     response = (
         supabase.table("product")
-        .update(product.dict()) # convert product object to dict - required by Supabase
+        .upsert(product.dict()) # convert product object to dict - required by Supabase
         .execute()
     )
     if(response.data) :
