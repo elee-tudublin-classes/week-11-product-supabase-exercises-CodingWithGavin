@@ -6,7 +6,7 @@
         <td><select name="category_id">
             <optgroup label="Categories">
                 {% for category in categories %}
-                    <option value="{{ category_id }}">{{ category.name.data }} </option>
+                    <option value="{{ product.category.id }}">{{ category.name }} </option>
                 {% endfor %}
             </optgroup>
         </select></td>
