@@ -16,11 +16,10 @@ supabase: Client = create_client(db_url, db_key)
 # get all products
 def dataGetProducts():
     response = (supabase.table("product")
-                .select("*")
+                .select("*, category(name)")
                 .order("title", desc=False)
                 .execute()
     )
-
     return response.data
 
 # get product by id
@@ -28,10 +27,11 @@ def dataGetProduct(id):
     # select * from product where id = id 
     response = (
         supabase.table("product")
-        .select("*")
+        .select("*, category(name)")
         .eq("id", id)
         .execute()
     )
+    print(response.data[0])
     return response.data[0]
 
 # update product
@@ -43,8 +43,12 @@ def dataUpdateProduct(product: Product) :
         .upsert(product.dict()) # convert product object to dict - required by Supabase
         .execute()
     )
-    # result is 1st item in the list
-    return response.data[0]
+    if(response.data) :
+
+            return dataGetProduct(response.data[0]['id'])
+        
+    return False
+
 
 # add product, accepts product object
 def dataAddProduct(product: Product) :
@@ -53,8 +57,13 @@ def dataAddProduct(product: Product) :
         .insert(product.dict()) # convert product object to dict - required by Supabase
         .execute()
     )
+    if(response.data) :
+
+            return dataGetProduct(response.data[0]['id'])
+        
+    return False
+
     # result is 1st item in the list
-    return response.data[0]
 
 # get all categories
 def dataGetCategories():
@@ -66,6 +75,23 @@ def dataGetCategories():
 
     return response.data
 
+def dataGetAllProductsAndCategories():
+    response = (supabase.table("category")
+                .select("*, category(name)")
+                .order("name", desc=False)
+                .execute()
+    )
+
+    return response.data
+
+def dataGetProductsByCat(id):
+    response = (supabase.table("product")
+                .select("*, category(name)")
+                .eq("category_id", id)
+                .order("title", desc=False)
+                .execute()
+    )
+    return response.data
 
 # delete product by id
 def dataDeleteProduct(id):

@@ -7,6 +7,11 @@ def getAllProducts() :
     products = dataGetProducts()
     return products
 
+def getProductsandCats():
+    prodandcats = dataGetAllProductsAndCategories()
+    return prodandcats
+    
+
 def getProduct(id) :
     return dataGetProduct(id)
 
@@ -25,6 +30,10 @@ def updateProduct(input: Product) :
 
     # return updated product
     return product
+
+def getProductsByCat(id : int):
+    return dataGetProductsByCat(id)
+
 
 
 def deleteProduct(id : int) :
